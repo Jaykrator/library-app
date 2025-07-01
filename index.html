@@ -5,25 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Library</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="app.js"></script>
+
     <style>
-    .dark-mode {
-      background-color: #1f2937;
-      color: #f9fafb;
-    }
-    .dark-mode * {
-      background-color: #1f2937 !important;
-      color: #f9fafb !important;
-      border-color: #4b5563 !important;
-    }
-    .dark-mode button {
-      background-color: #374151 !important;
-      color: #f9fafb !important;
-    }
-    .dark-mode button:hover {
-      background-color: #4b5563 !important;
-    }
-  </style>
+      .dark-mode {
+        background-color: #1f2937;
+        color: #f9fafb;
+      }
+      .dark-mode * {
+        background-color: #1f2937 !important;
+        color: #f9fafb !important;
+        border-color: #4b5563 !important;
+      }
+      .dark-mode button {
+        background-color: #374151 !important;
+        color: #f9fafb !important;
+      }
+      .dark-mode button:hover {
+        background-color: #4b5563 !important;
+      }
+    </style>
   </head>
   <body class="bg-gray-100 min-h-screen p-4 transition duration-300" id="body">
     <div
@@ -42,7 +42,7 @@
           class="ml-4 text-sm text-gray-600"
           id="toggleBtn"
         >
-          Toggle Theme
+          Dark Mode
         </button>
       </div>
 
@@ -104,5 +104,6 @@
         Clear All
       </button>
     </div>
+    <script src="app.js"></script>
   </body>
 </html>
