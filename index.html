@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Library</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="app.js"></script>
+    <style>
+    .dark-mode {
+      background-color: #1f2937;
+      color: #f9fafb;
+    }
+    .dark-mode * {
+      background-color: #1f2937 !important;
+      color: #f9fafb !important;
+      border-color: #4b5563 !important;
+    }
+    .dark-mode button {
+      background-color: #374151 !important;
+      color: #f9fafb !important;
+    }
+    .dark-mode button:hover {
+      background-color: #4b5563 !important;
+    }
+  </style>
+  </head>
+  <body class="bg-gray-100 min-h-screen p-4 transition duration-300" id="body">
+    <div
+      class="max-w-xl mx-auto bg-white rounded-lg shadow-lg p-6"
+      id="appContainer"
+    >
+      <div class="flex justify-between items-center mb-4">
+        <h1
+          class="text-2xl font-bold text-center text-gray-900 w-full"
+          id="titleText"
+        >
+          📚 My Library
+        </h1>
+        <button
+          onclick="toggleTheme()"
+          class="ml-4 text-sm text-gray-600"
+          id="toggleBtn"
+        >
+          Toggle Theme
+        </button>
+      </div>
+
+      <!-- Search -->
+      <input
+        id="searchInput"
+        type="text"
+        placeholder="Search by title or author..."
+        class="w-full mb-4 p-2 border border-gray-300 rounded"
+      />
+
+      <!-- Form to add a book -->
+      <form id="bookForm" class="space-y-4 mb-6">
+        <input
+          id="title"
+          type="text"
+          placeholder="Book Title"
+          class="w-full p-2 border border-gray-300 rounded"
+          required
+        />
+        <input
+          id="author"
+          type="text"
+          placeholder="Author"
+          class="w-full p-2 border border-gray-300 rounded"
+          required
+        />
+        <input
+          id="pages"
+          type="number"
+          placeholder="Number of Pages"
+          class="w-full p-2 border border-gray-300 rounded"
+          required
+        />
+        <input
+          id="image"
+          type="url"
+          placeholder="Image URL (optional)"
+          class="w-full p-2 border border-gray-300 rounded"
+        />
+        <label class="flex items-center space-x-2">
+          <input type="checkbox" id="hasRead" />
+          <span>I have read this book</span>
+        </label>
+        <button
+          type="submit"
+          class="bg-yellow-400 px-4 py-2 rounded hover:bg-yellow-500"
+        >
+          Add Book
+        </button>
+      </form>
+
+      <!-- Where books will be displayed -->
+      <div id="library" class="grid gap-4 sm:grid-cols-2"></div>
+      <button
+        onclick="clearLibrary()"
+        class="mt-6 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+      >
+        Clear All
+      </button>
+    </div>
+  </body>
+</html>
