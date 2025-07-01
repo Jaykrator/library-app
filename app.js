@@ -1,3 +1,4 @@
+// Book constructor function to create new book objects
 function Book(title, author, pages, hasRead, image) {
   this.title = title;
   this.author = author;
@@ -6,23 +7,21 @@ function Book(title, author, pages, hasRead, image) {
   this.image = image;
 }
 
-let library = [];
+let library = []; // Array to hold all book objects
 
-// ✅ Validate image URL
-function isValidImageURL(url) {
-  return url.match(/\.(jpeg|jpg|png)$/i);
-}
-
+// Adds a new book to the library array and updates UI + storage
 function addBookToLibrary(book) {
   library.push(book);
   saveLibrary();
   displayBooks();
 }
 
+// Saves the current library array to localStorage
 function saveLibrary() {
   localStorage.setItem('myLibrary', JSON.stringify(library));
 }
 
+// Loads books from localStorage and repopulates the library array
 function loadLibrary() {
   const stored = localStorage.getItem('myLibrary');
   if (stored) {
@@ -35,14 +34,16 @@ function loadLibrary() {
   }
 }
 
+// Displays all books (or filtered ones) on the page
 function displayBooks(books = library) {
   const container = document.getElementById('library');
-  container.innerHTML = '';
+  container.innerHTML = ''; // Clear previous books
 
   books.forEach((book, index) => {
     const card = document.createElement('div');
     card.className = 'border p-4 rounded shadow bg-white dark:bg-gray-700';
 
+    // Conditionally add the image only if one exists
     card.innerHTML = `
       ${
         book.image
@@ -54,18 +55,19 @@ function displayBooks(books = library) {
       }</h2>
       <p class="text-gray-700 dark:text-gray-200">Author: ${book.author}</p>
       <p class="text-gray-700 dark:text-gray-200">Pages: ${book.pages}</p>
-      <p class="text-gray-700 dark:text-gray-200">Status: <span class="font-semibold">
-        ${book.hasRead ? 'Read ✅' : 'Not Read ❌'}
-      </span></p>
+      <p class="text-gray-700 dark:text-gray-200">Status: <span class="font-semibold">${
+        book.hasRead ? 'Read ✅' : 'Not Read ❌'
+      }</span></p>
       <div class="flex gap-2 mt-3">
         <button data-index="${index}" class="toggleRead bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600">Toggle Read</button>
         <button data-index="${index}" class="deleteBook bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Delete</button>
       </div>
     `;
+
     container.appendChild(card);
   });
 
-  // Toggle Read/Not Read
+  // Add event listeners for toggle read buttons
   document.querySelectorAll('.toggleRead').forEach((btn) => {
     btn.addEventListener('click', (e) => {
       const idx = e.target.getAttribute('data-index');
@@ -75,7 +77,7 @@ function displayBooks(books = library) {
     });
   });
 
-  // Delete Book
+  // Add event listeners for delete buttons
   document.querySelectorAll('.deleteBook').forEach((btn) => {
     btn.addEventListener('click', (e) => {
       const idx = e.target.getAttribute('data-index');
@@ -86,7 +88,7 @@ function displayBooks(books = library) {
   });
 }
 
-// ✅ Handle form submit
+// Form submit handler to add new book
 document.getElementById('bookForm').addEventListener('submit', function (e) {
   e.preventDefault();
 
@@ -96,24 +98,18 @@ document.getElementById('bookForm').addEventListener('submit', function (e) {
   const hasRead = document.getElementById('hasRead').checked;
   let image = document.getElementById('image').value.trim();
 
-  // Validate and handle image URL
+  // If user enters an image, check if it's a valid image URL
   if (image && !isValidImageURL(image)) {
-    alert(
-      'Please enter a valid image URL ending in .jpg, .jpeg, or .png. A placeholder will be used.'
-    );
-    image = 'https://via.placeholder.com/150';
-  }
-
-  if (!image) {
-    image = 'https://via.placeholder.com/150'; // fallback
+    alert('Please enter a valid image URL ending in .jpg, .jpeg, or .png.');
+    return;
   }
 
   const newBook = new Book(title, author, pages, hasRead, image);
   addBookToLibrary(newBook);
-  this.reset();
+  this.reset(); // Clear form after adding
 });
 
-// ✅ Search input
+// Filter/search input for books by title or author
 document.getElementById('searchInput').addEventListener('input', function (e) {
   const term = e.target.value.toLowerCase();
   const filtered = library.filter(
@@ -124,14 +120,14 @@ document.getElementById('searchInput').addEventListener('input', function (e) {
   displayBooks(filtered);
 });
 
-// ✅ Clear all books
+// Clears all books from localStorage and UI
 function clearLibrary() {
   localStorage.clear();
   library = [];
   displayBooks();
 }
 
-// ✅ Theme toggle
+// Toggle between light and dark mode
 function toggleTheme() {
   const body = document.getElementById('body');
   const app = document.getElementById('appContainer');
@@ -143,5 +139,10 @@ function toggleTheme() {
   toggleBtn.classList.toggle('text-white');
 }
 
-// ✅ Initial load
+// Optional helper to check if image URL is valid
+function isValidImageURL(url) {
+  return /\.(jpeg|jpg|png)$/i.test(url);
+}
+
+// Load any saved books when page loads
 loadLibrary();
